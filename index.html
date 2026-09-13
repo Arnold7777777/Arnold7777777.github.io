@@ -2128,6 +2128,90 @@ const PICS = {
          ['What else?', 'What are those for?']),
       pq('Tell me about Justice.', 'Justice is …',
          ['What is he good at?', 'What do you two like to do together?'])
+    ]},
+  ghost: { src: 'ghost.jpg', cap: 'You and Anna, busting ghosts.',
+    alt: 'Todd and his daughter Anna in tan Ghostbusters jumpsuits with proton packs, firing crackling blue beams at a green slime ghost outside an old stone building at night, a ghost trap open on the ground and a purple ghost peeking from behind a lamppost.',
+    qs: [
+      pq('Tell me what is happening here.', 'What is happening is …',
+         ['Tell me more.', 'What happens next?']),
+      pq('Describe the green thing.', 'The green thing is …',
+         ['What is it doing?', 'What does it want?']),
+      pq('Tell me about Anna in this picture.', 'Anna is …',
+         ['What is she doing?', 'What is she saying to you?']),
+      pq('Tell me about a scary movie you like.', 'I like …',
+         ['What happens in it?', 'Who did you watch it with?'])
+    ]},
+  area51: { src: 'area51.jpg', cap: 'You and Autumn at Area 51, with Johnny 5.',
+    alt: 'Todd and his daughter Autumn taking a selfie in front of a glowing flying saucer at an Area 51 hangar, with the robot Johnny 5 waving beside them and two gray aliens waving in the background.',
+    qs: [
+      pq('Tell me where you are in this picture.', 'We are at …',
+         ['What is that place?', 'What happens there?']),
+      pq('Describe the robot.', 'The robot is …',
+         ['What is he doing?', 'What is his name?']),
+      pq('Tell me what the aliens are up to.', 'The aliens are …',
+         ['What do they want?', 'What would you say to them?']),
+      pq('Tell me about Autumn.', 'Autumn is …',
+         ['What is she like?', 'What does she like to do?'])
+    ]},
+  cranes: { src: 'cranes.jpg', cap: 'You and Jeremy on paper cranes in Japan.',
+    alt: 'Todd and his son Jeremy each riding a giant white origami crane across a river, with cherry blossoms, a wooden bridge, a Japanese castle and a snow-capped mountain behind them.',
+    qs: [
+      pq('Tell me what the two of you are riding.', 'We are riding …',
+         ['Where are they going?', 'What is it like?']),
+      pq('Describe everything behind you.', 'Behind us there is …',
+         ['What else?', 'Tell me about the mountain.']),
+      pq('Tell me what Jeremy is saying.', 'Jeremy is saying …',
+         ['What do you say back?', 'What is he pointing at?']),
+      pq('Tell me about a place you would like to travel to.', 'I would like to go to …',
+         ['What would you do there?', 'Who would you take?'])
+    ]},
+  chef: { src: 'chef.jpg', cap: 'You, Justice and the Swedish Chef at a metal show.',
+    alt: 'Todd, his son Justice and the Swedish Chef from the Muppets, all in chef hats and food-splattered aprons, throwing metal horns in a crowd at a Swedish death metal show, with Swedish flags and a band on stage behind them.',
+    qs: [
+      pq('Tell me what is going on here.', 'What is going on is …',
+         ['Tell me more.', 'What is the band playing?']),
+      pq('Describe the fellow with the wooden spoon.', 'He is …',
+         ['What is he doing?', 'What is he saying?']),
+      pq('Tell me why everyone is dressed like a cook.', 'They are dressed like cooks because …',
+         ['What is on the aprons?', 'What did they cook?']),
+      pq('Tell me about Justice.', 'Justice is …',
+         ['What music does he like?', 'What do you two do together?'])
+    ]},
+  minecraft: { src: 'minecraft.jpg', cap: 'You and Anna in a Minecraft village.',
+    alt: 'Todd holding out a green emerald and his daughter Anna carrying a box of carrots in a blocky Minecraft village at sunset, with a villager, an iron golem and a sheep nearby.',
+    qs: [
+      pq('Tell me what is going on in this village.', 'In the village, …',
+         ['Tell me more.', 'What is Anna pointing at?']),
+      pq('Describe the thing in your hand.', 'It is …',
+         ['What is it for?', 'Where did you get it?']),
+      pq('Tell me about the creature on the left.', 'That one is …',
+         ['What does it want?', 'What will it do?']),
+      pq('Tell me about a game you like to play.', 'I like to play …',
+         ['How does it work?', 'Who do you play it with?'])
+    ]},
+  powerpuff: { src: 'powerpuff.jpg', cap: 'You and Justice, with the Powerpuff Girls.',
+    alt: 'Todd in green superhero armor and his son Justice in blue, pinning a striped-shirt burglar to the street beside a spilled bag of jewels, while the three Powerpuff Girls fly overhead in front of a jewelry store.',
+    qs: [
+      pq('Tell me what just happened here.', 'What happened is …',
+         ['Tell me more.', 'What happens to him now?']),
+      pq('Describe the three flying overhead.', 'The three of them are …',
+         ['What are they doing?', 'What are their names?']),
+      pq('Tell me about Justice in this picture.', 'Justice is …',
+         ['What is his power?', 'What is he feeling?']),
+      pq('Tell me about a time you helped someone.', 'One time, I helped …',
+         ['What happened?', 'What did they say?'])
+    ]},
+  japan: { src: 'japan.jpg', cap: 'Ramen in Japan with Jeremy and Awesome-O.',
+    alt: 'Todd reading a map, his son Jeremy pointing down a lantern-lit Japanese street, and Awesome-O the cardboard robot between them at a ramen stand with a steaming bowl of noodles on the counter.',
+    qs: [
+      pq('Tell me what you are looking for on that map.', 'I am looking for …',
+         ['Where are you trying to go?', 'What does Jeremy think?']),
+      pq('Describe the food on the counter.', 'The food is …',
+         ['What is in it?', 'What does it taste like?']),
+      pq('Tell me what Jeremy is pointing at.', 'Jeremy is pointing at …',
+         ['What makes you say that?', 'What does he want to do?']),
+      pq('Tell me about the best meal you ever ate.', 'The best meal was …',
+         ['Where was it?', 'Who was with you?'])
     ]}
 };
 
@@ -2135,7 +2219,7 @@ const PICS = {
 
 const TOPICS = [
   { key: 'music', name: 'Music', sub: 'Guitars, bands, loud things', em: '🎸',
-    picKeys: ['jeremy', 'metal', 'concert', 'robotBand'],
+    picKeys: ['chef', 'jeremy', 'metal', 'concert', 'robotBand'],
     qs: [
       pq('Tell me about the first band you loved.', 'The first band I loved was …',
          ['What did they sound like?', 'Who played it for you first?']),
@@ -2147,7 +2231,7 @@ const TOPICS = [
          ['What do you play together?', 'What is it like when it works?'])
     ]},
   { key: 'home', name: 'Food & home', sub: 'Cooking, coffee, the kitchen', em: '☕',
-    picKeys: ['spaghetti', 'popcorn', 'kitchen'],
+    picKeys: ['japan', 'spaghetti', 'popcorn', 'kitchen'],
     qs: [
       pq('Tell me about your morning.', 'In the morning I …',
          ['What comes first?', 'Who else is up?']),
@@ -2171,7 +2255,7 @@ const TOPICS = [
          ['What makes you say that?', 'What would you say back?'])
     ]},
   { key: 'outside', name: 'Outside', sub: 'The park, the lake, the weather', em: '🌲',
-    picKeys: ['gorilla', 'park', 'robotGarden'],
+    picKeys: ['cranes', 'gorilla', 'park', 'robotGarden'],
     qs: [
       pq('Tell me where you like to go when you get out of the house.', 'I like to go …',
          ['What is it like there?', 'Who goes with you?']),
@@ -2183,7 +2267,7 @@ const TOPICS = [
          ['How far did you go?', 'What did you see?'])
     ]},
   { key: 'life', name: 'My life', sub: 'People, memories, days', em: '⭐',
-    picKeys: ['gorilla', 'jeremy', 'portrait', 'park'],
+    picKeys: ['minecraft', 'gorilla', 'jeremy', 'portrait', 'park'],
     qs: [
       pq('Tell me about the day you met Caroline.', 'When I met Caroline …',
          ['Where were you?', 'What did you think?']),
@@ -2195,7 +2279,7 @@ const TOPICS = [
          ['What would it take?', 'Who would you do it with?'])
     ]},
   { key: 'adventure', name: 'Adventures', sub: 'Aliens, heroes, Awesome-O', em: '🚀',
-    picKeys: ['cow', 'jedi', 'crime'],
+    picKeys: ['ghost', 'area51', 'powerpuff', 'cow', 'jedi', 'crime'],
     qs: [
       pq('Tell me about Awesome-O.', 'Awesome-O is …',
          ['Where did he come from?', 'What is he good at?']),
