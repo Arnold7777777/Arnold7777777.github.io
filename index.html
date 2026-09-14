@@ -3085,6 +3085,19 @@ function speakHint() {
   return 'Tap the <b>&#127908; on your keyboard</b> and talk.';
 }
 
+/* plain words for each way the browser can refuse, with the fix for that one */
+function micProblem(code) {
+  const embedded = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
+  if (code === 'not-allowed' || code === 'service-not-allowed') {
+    if (embedded) return 'This viewer blocks the microphone. Open <b>arnold7777777.github.io</b> in its own tab and tap Speak there. Or:';
+    return 'The microphone is <b>blocked for this site</b>. Click the &#128274; or &#127908; icon at the left of the web address, set Microphone to <b>Allow</b>, reload, and tap Speak again. Or:';
+  }
+  if (code === 'audio-capture') return 'No microphone was found. Check it is plugged in and turned on in Windows. Or:';
+  if (code === 'network') return 'Listening needs the internet and could not reach it. Or:';
+  if (code === 'language-not-supported') return 'This browser cannot listen in English. Or:';
+  return 'The browser could not listen (' + code + '). Or:';
+}
+
 function stopBrowserMic() {
   if (!live) return;
   const { rec, btn } = live;
@@ -3120,8 +3133,8 @@ function startBrowserMic(btn, ta, hint, more) {
     const why = ev.error;
     stopBrowserMic();
     if (why === 'no-speech' || why === 'aborted') return;
-    // blocked, no device, no network: hand over to the device's own voice typing
-    showFallback(hint, more, 'The browser could not listen.');
+    // say what went wrong and the one fix for it, then offer the device's own voice typing
+    showFallback(hint, more, micProblem(why));
   };
   rec.onend = () => { if (live && live.rec === rec) stopBrowserMic(); };
   try { rec.start(); } catch (e) { return false; }
