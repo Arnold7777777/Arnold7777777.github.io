@@ -393,27 +393,15 @@ button.armed:hover{background:#74263f}
 .woodsrow .wm{font-size:17px;margin:0;border-left:4px solid var(--gold);
   padding-left:12px;color:#4a4160}
 
-/* ---------- microphone setup ---------- */
-.checklist{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}
-.checklist li{display:flex;gap:12px;align-items:flex-start;font-size:17px;
-  background:var(--panel-2);border-radius:12px;padding:12px 14px}
-.checklist .mk{flex:none;width:28px;height:28px;border-radius:50%;display:grid;
-  place-items:center;font-size:16px;font-weight:800;color:#fff}
-.checklist .ok .mk{background:var(--ok)}
-.checklist .no .mk{background:#8d2547}
-.checklist .wait .mk{background:var(--muted)}
-.checklist b{display:block;font-size:17px}
-.checklist span{display:block;font-size:15px;color:var(--muted);overflow-wrap:break-word}
-.heardback{font-size:24px;font-weight:700;background:#fff;border:2px solid #b3a4cf;
-  border-radius:14px;padding:14px;margin:8px 0 0;min-height:60px;overflow-wrap:break-word}
-#micFix p{font-size:17px;margin:8px 0}
-#micFix ol{margin:8px 0;padding-left:22px}
-#micFix li{font-size:17px;margin:6px 0}
-
 /* ---------- speak instead of typing ---------- */
-.dictbtn{width:100%;min-height:58px;font-size:18px;margin:2px 0 10px;
-  border:2px dashed #9fc9bd;background:#eef7f4;color:#14534a}
-.dictbtn:hover{background:#ddeee9;border-color:#6fae9e;border-style:solid}
+.speakbtn{width:100%;min-height:84px;font-size:26px;font-weight:800;margin:6px 0 4px;
+  background:var(--accent);border-color:var(--accent);color:#fff}
+.speakbtn:hover{background:#432a75;border-color:#432a75}
+.speakhint{font-size:20px;font-weight:600;color:#14534a;background:#eef7f4;
+  border-left:5px solid #6fae9e;border-radius:0 12px 12px 0;padding:12px 14px;margin:0 0 12px;
+  overflow-wrap:break-word}
+.speakhint b{color:#0b3a33}
+.speakmore{font-size:16px;min-height:40px;padding:6px 12px;margin-left:6px;background:#fff;vertical-align:middle}
 .dictbody{max-width:52ch}
 .dictbody h3{margin:16px 0 6px;font-size:20px}
 .dictbody ol{padding-left:24px;margin:8px 0}
@@ -485,8 +473,6 @@ button.armed:hover{background:#74263f}
     <h2>What shall we talk about?</h2>
     <div class="topicbar" id="topicbar"></div>
 
-    <div id="micWarn" class="micwarn" hidden>The microphone does not work in this browser. Open this in <strong>Google Chrome</strong> or <strong>Microsoft Edge</strong> to talk. You can still type below.</div>
-
     <figure class="scene" id="scene" hidden>
       <img id="sceneImg" width="1200" height="800" alt="">
       <figcaption><span id="sceneCap"></span><button type="button" id="enlarge">&#9974;&nbsp; See it bigger</button></figcaption>
@@ -508,14 +494,8 @@ button.armed:hover{background:#74263f}
     <section class="step" id="step2" aria-labelledby="step2h">
       <div class="stephead"><span class="stepnum" aria-hidden="true">2</span>
         <h3 id="step2h">Say your answer</h3></div>
-      <button class="mic" id="mic" aria-pressed="false">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="8" y="2" width="8" height="13" rx="4"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg>
-        <span id="micLabel">Tap to talk</span>
-      </button>
-      <p class="micstate" id="micState" role="status" aria-live="polite">Take your time. There is no timer.</p>
-      <label for="heard" class="wordslabel">Your words &mdash; change anything it got wrong</label>
-      <textarea id="heard" class="heard" rows="3" maxlength="1500" placeholder="Speak, or type here."></textarea>
-      <div class="interim" id="interim" aria-live="off"></div>
+      <label for="heard" class="wordslabel">Your words</label>
+      <textarea id="heard" class="heard" rows="3" maxlength="1500" placeholder="Your words go here."></textarea>
       <div class="row">
         <button class="primary" id="confirm">&#10003;&nbsp; That&rsquo;s what I meant</button>
         <button id="clearHeard">Start over</button>
@@ -537,14 +517,6 @@ button.armed:hover{background:#74263f}
     <p class="status" id="talkStatus" role="status"></p>
 
     <button class="primary nextbig" id="nextBtn">Next question &nbsp;&rarr;</button>
-    <p class="nexthint">You can move on whenever you like. Nothing is scored.</p>
-
-    <details>
-      <summary>About the microphone</summary>
-      <p>The microphone only turns on when you tap it and allow access. The browser&rsquo;s speech service may send audio to its provider and may need internet. <strong>This app does not save or send your audio or your answers.</strong></p>
-      <p>If it mishears you, that is the technology, not you. Change the words in the box, or ignore it. Nothing here is scored, and there is no right answer.</p>
-      <p>Steady&rsquo;s replies are written in advance for each question. They invite you to say more. They do not read or judge what you said.</p>
-    </details>
   </div>
 </section>
 
@@ -575,9 +547,7 @@ button.armed:hover{background:#74263f}
     <h2>Before you start</h2>
     <div class="warn">
       <p><strong>These measure personality and moral opinions. They do not measure speech or recovery.</strong></p>
-      <p class="small">They are here because they are interesting to talk about. The talking is the point; the questionnaire is the excuse to talk.</p>
-      <p class="small">Only the rating you tap is scored. <strong>Anything you say out loud is never scored, never judged, and never saved.</strong></p>
-      <p class="small">A stroke, tiredness, or a hard week can change how someone answers. This app cannot separate that from personality. Treat the result as a conversation starter, not a verdict.</p>
+      <p class="small">Only the rating you tap is scored. Anything you say is never scored or saved.</p>
     </div>
   </div>
 </section>
@@ -607,13 +577,7 @@ button.armed:hover{background:#74263f}
 
     <div class="cues">
       <h3>Want to say more about that?</h3>
-      <p class="small muted" id="quizTalkPrompt">Talking is optional. It never changes your score.</p>
-      <button class="mic" id="quizMic" aria-pressed="false" style="margin-top:10px">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="8" y="2" width="8" height="13" rx="4"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg>
-        <span id="quizMicLabel">Tap to talk</span>
-      </button>
-      <p class="micstate" id="quizMicState" role="status" aria-live="polite">Microphone off.</p>
-      <textarea id="quizHeard" class="heard" rows="2" maxlength="1000" placeholder="Your words appear here. Not scored."></textarea>
+      <textarea id="quizHeard" class="heard" rows="2" maxlength="1000" placeholder="Not scored."></textarea>
     </div>
 
     <p class="status" id="quizStatus" role="status"></p>
@@ -683,13 +647,8 @@ button.armed:hover{background:#74263f}
 
       <div class="step">
         <div class="stephead"><span class="stepnum" aria-hidden="true">2</span><h3>Say what you see</h3></div>
-        <button class="mic" id="cardMic" aria-pressed="false">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="8" y="2" width="8" height="13" rx="4"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg>
-          <span id="cardMicLabel">Tap to talk</span>
-        </button>
-        <p class="micstate" id="cardMicState" role="status" aria-live="polite">There is no wrong answer here.</p>
         <label for="cardHeard" class="wordslabel">Your words</label>
-        <textarea id="cardHeard" class="heard" rows="3" maxlength="1000" placeholder="Speak, or type what you see."></textarea>
+        <textarea id="cardHeard" class="heard" rows="3" maxlength="1000" placeholder="What do you see?"></textarea>
         <div class="row">
           <button class="primary" id="cardSave">&#10003;&nbsp; That&rsquo;s what I see</button>
           <button id="cardClear">Start over</button>
@@ -718,7 +677,7 @@ button.armed:hover{background:#74263f}
   <div class="panel">
     <div class="eyebrow">The ten cards</div>
     <h1>What you saw</h1>
-    <p class="muted">Your own words, card by card. Nothing here has been scored or interpreted.</p>
+    <p class="muted">Your own words, card by card.</p>
     <div id="cardRecord"></div>
     <div class="means">
       <h3>Why there is no result</h3>
@@ -772,13 +731,8 @@ button.armed:hover{background:#74263f}
 
       <div class="step">
         <div class="stephead"><span class="stepnum" aria-hidden="true">2</span><h3>Say what you see</h3></div>
-        <button class="mic" id="woodsMic" aria-pressed="false">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="8" y="2" width="8" height="13" rx="4"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg>
-          <span id="woodsMicLabel">Tap to talk</span>
-        </button>
-        <p class="micstate" id="woodsMicState" role="status" aria-live="polite">Anything you imagine is a right answer.</p>
         <label for="woodsHeard" class="wordslabel">Your words</label>
-        <textarea id="woodsHeard" class="heard" rows="3" maxlength="1000" placeholder="Speak, or type what you picture."></textarea>
+        <textarea id="woodsHeard" class="heard" rows="3" maxlength="1000" placeholder="What do you picture?"></textarea>
         <div class="row">
           <button class="primary" id="woodsSave">&#10003;&nbsp; That&rsquo;s what I see</button>
           <button id="woodsClear">Start over</button>
@@ -856,24 +810,9 @@ button.armed:hover{background:#74263f}
   </div>
 
   <div class="panel">
-    <h2>Read this first</h2>
     <div class="warn">
-      <p><strong>These are practice activities, not a medical test.</strong></p>
-      <p class="small">They are built on the kinds of tasks speech therapists use &mdash; naming, finding a word with no picture to help, describing around a word, finishing sentences, and word fluency. They are <strong>not</strong> a standardized test like the Western Aphasia Battery, and the scores are <strong>not</strong> a diagnosis.</p>
-      <p class="small">What the scores are good for: <strong>seeing change over weeks</strong>, and giving the speech-language pathologist something concrete. Print the progress page and take it to the appointment.</p>
-      <p class="small">Doing the same activity often makes scores go up partly from practice on these exact items. That is a real benefit for daily speech, but it means the number is not a clean measure of recovery.</p>
+      <p><strong>Practice, not a medical test.</strong> <span class="small">Scores show change over weeks. Print the progress page for the speech therapist.</span></p>
     </div>
-    <div class="note" style="margin-top:16px">
-      <p><strong>Why these activities and not others.</strong></p>
-      <p class="small">This set is aimed at <strong>expressive</strong> aphasia where understanding is intact and reading aloud is unaffected. So there is no yes/no comprehension check and no repeat-after-me: if he understands you and can read a sentence off the screen, neither one is measuring the thing that is hard.</p>
-      <p class="small">What is left is the part that is hard &mdash; producing a word with nothing to copy. Naming a picture, answering a question with no picture, talking around a word when it will not come, and generating words freely against the clock.</p>
-      <p class="small">If any of that is wrong for him, say so and it changes.</p>
-    </div>
-    <details>
-      <summary>Why there is no microphone scoring</summary>
-      <p>Speech recognition is built to transcribe typical speech. It misreads aphasic and apraxic speech often, and it cannot tell a good attempt from a bad one. Scoring by voice would hand out failures that are the software&rsquo;s fault.</p>
-      <p>So <strong>you</strong> decide. After each item you tap one of three buttons. The person practicing can tap it, or the person sitting with them can. Both are valid.</p>
-    </details>
   </div>
 </section>
 
@@ -1013,58 +952,19 @@ button.armed:hover{background:#74263f}
     <div class="field">
       <label for="nameIn">Who is practicing?</label>
       <input id="nameIn" type="text" maxlength="30" placeholder="First name" autocomplete="off">
-      <p class="small muted">Used in the greeting only. Nothing is sent anywhere.</p>
+      <p class="small muted">Used in the greeting.</p>
     </div>
   </div>
 
-  <div class="panel" id="micPanel">
+  <div class="panel">
     <h2>Speaking your answers</h2>
-    <div class="note">
-      <p><strong>The way that always works: your device&rsquo;s own dictation.</strong></p>
-      <p class="small">Every &ldquo;your words&rdquo; box in this app has a <strong>Speak instead of typing</strong> button under it. Your phone, tablet or computer types what you say straight into the box. It needs no permission from this app, so <strong>it works on the web link, on a saved file, anywhere</strong>.</p>
-      <button class="primary" id="micShowDict" style="margin-top:8px">&#127908;&nbsp; Show me how on this device</button>
-    </div>
-
-    <h3 style="margin-top:24px">The app&rsquo;s own microphone button</h3>
-    <p class="muted" style="font-size:17px">Separate from the above, and fussier: browsers only allow it on an <strong>https web address</strong>. Tap below to find out whether it can work here.</p>
-
-    <button class="mic" id="micTest" style="margin-top:6px">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="8" y="2" width="8" height="13" rx="4"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/></svg>
-      <span id="micTestLabel">Test the microphone</span>
-    </button>
-
-    <ul class="checklist" id="micChecks"></ul>
-
-    <div id="micVerdict" class="note" hidden>
-      <p id="micVerdictText" style="margin:0 0 8px"></p>
-      <div id="micFix"></div>
-    </div>
-
-    <div id="micHeardBox" hidden>
-      <label class="wordslabel" for="micHeardText">What it heard</label>
-      <p class="heardback" id="micHeardText"></p>
-    </div>
-
-    <details>
-      <summary>Where the microphone is used</summary>
-      <p><strong>Talk</strong> &mdash; say an answer to a question.<br>
-         <strong>The ten cards</strong> and <strong>Walk in the woods</strong> &mdash; say what you see.<br>
-         <strong>About you</strong> &mdash; talk about a statement, never scored.</p>
-      <p>Every one of those has a typing box as well. <strong>Nothing in this app needs the microphone.</strong> If it will not work, type instead and nothing is lost.</p>
-      <p><strong>Browsers only allow microphones on https web addresses.</strong> A file opened from your own computer, or a page shown inside another window, will be refused &mdash; that is a browser rule, not a fault in the app.</p>
-    </details>
-
-    <details>
-      <summary>What happens to the audio</summary>
-      <p>The microphone turns on only when a button is tapped. The browser&rsquo;s own speech service does the transcribing, which usually means the audio goes to that browser maker&rsquo;s servers and needs internet.</p>
-      <p><strong>This app never records, stores or sends audio itself</strong>, and it does not save what was said except the words you choose to keep on the cards and the woods walk, which stay in this browser.</p>
-    </details>
+    <p class="muted" style="font-size:18px">Every answer box has a <strong>Speak</strong> button. It uses your device&rsquo;s own voice typing.</p>
+    <button class="primary" id="micShowDict">&#127908;&nbsp; Show me how on this device</button>
   </div>
-
 
   <div class="panel">
     <h2>The speaking voice</h2>
-    <p class="muted" style="font-size:18px">This is the voice that reads questions out loud &mdash; separate from the microphone above.</p>
+    <p class="muted" style="font-size:18px">The voice that reads questions out loud.</p>
     <div class="field">
       <label for="voiceIn">Speaking voice</label>
       <select id="voiceIn"><option value="">Device default</option></select>
@@ -1443,21 +1343,6 @@ const speak = text => {
 
 /* confirm() is blocked in some embedded frames, which makes a button look dead.
    Two taps on the button itself works everywhere, and needs no dialog. */
-/* what to say when the app's own microphone is refused — the reason differs by
-   where the page is running, and "allow it in site settings" is only true on
-   an https address in its own tab */
-function micBlockedText() {
-  const embedded = (() => { try { return window.self !== window.top; } catch (e) { return true; } })();
-  const dict = '\u{1F3A4} Speak instead of typing (below) works here.';
-  if (location.protocol === 'file:')
-    return 'A file opened from your computer cannot use the microphone. ' + dict;
-  if (embedded)
-    return 'The viewer this page is sitting inside will not let it use a microphone. ' + dict;
-  if (!window.isSecureContext)
-    return 'The microphone only works on an https address. ' + dict;
-  return 'The browser blocked the microphone. Tap the lock by the web address and allow it \u2014 or ' + dict;
-}
-
 function armConfirm(btn, askText, doneText, action) {
   let armed = false, t = null;
   const reset = () => { armed = false; btn.textContent = btn.dataset.idle; btn.classList.remove('armed'); };
@@ -2341,7 +2226,6 @@ const TOPICS = [
 ];
 
 let tKey = 'life', tIndex = 0, tFollow = 0, answered = 0;
-let rec = null, listening = false, finalText = '';
 
 try {
   const p = JSON.parse(localStorage.getItem('steady-checkin-v1'));
@@ -2432,8 +2316,6 @@ function drawQuestion() {
   $('starterBtn').textContent = '💡  Give me a way to start';
   $('step3').hidden = true;
   $('heard').value = '';
-  $('interim').textContent = '';
-  finalText = '';
   $('talkStatus').textContent = '';
   tFollow = 0;
   setStep(1);
@@ -2464,73 +2346,11 @@ $('closePic').addEventListener('click', () => closeOverlay('bigPic'));
 
 /* one way forward, always in the same place */
 $('nextBtn').addEventListener('click', () => {
-  stopVoice(); stopListening();
+  stopVoice();
   const list = qlist(topicOf(tKey));
   tIndex = (tIndex + 1) % list.length;
   drawQuestion();
   $('question').scrollIntoView({ block: 'center', behavior: reducedMotion ? 'auto' : 'smooth' });
-});
-
-/* ---- microphone ---- */
-
-const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-if (!SR) $('micWarn').hidden = false;
-
-function setMicState(text, live) {
-  $('micState').textContent = text;
-  $('micState').classList.toggle('live', !!live);
-}
-
-function startListening() {
-  if (!SR) { setMicState('No microphone in this browser. Type your answer instead.'); return; }
-  try { rec = new SR(); }
-  catch (e) { setMicState('The microphone could not start. Type instead.'); return; }
-  rec.continuous = true;
-  rec.interimResults = true;
-  rec.lang = 'en-US';
-  finalText = $('heard').value ? $('heard').value.trim() + ' ' : '';
-
-  rec.onresult = e => {
-    let interim = '';
-    for (let i = e.resultIndex; i < e.results.length; i++) {
-      const chunk = e.results[i][0].transcript;
-      if (e.results[i].isFinal) finalText += chunk + ' ';
-      else interim += chunk;
-    }
-    $('heard').value = finalText.trim();
-    $('interim').textContent = interim;
-  };
-  rec.onerror = ev => {
-    if (ev.error === 'not-allowed' || ev.error === 'service-not-allowed')
-      setMicState(micBlockedText());
-    else if (ev.error === 'no-speech') setMicState('I did not hear anything. Tap and try again.');
-    else setMicState('The microphone stopped. Tap to try again.');
-    stopListening();
-  };
-  rec.onend = () => { if (listening) stopListening(); };
-
-  try { rec.start(); } catch (e) { return; }
-  listening = true;
-  setStep(2);
-  $('mic').setAttribute('aria-pressed', 'true');
-  $('micLabel').textContent = 'Listening — tap when done';
-  setMicState('Listening. Take your time.', true);
-}
-
-function stopListening() {
-  listening = false;
-  if (rec) { try { rec.stop(); } catch (e) {} rec = null; }
-  $('mic').setAttribute('aria-pressed', 'false');
-  $('micLabel').textContent = 'Tap to talk';
-  $('interim').textContent = '';
-  const s = $('micState').textContent;
-  if (!s.includes('blocked') && !s.includes('did not hear') && !s.includes('No microphone'))
-    setMicState($('heard').value.trim() ? 'Got it. Check the words below.' : 'Take your time. There is no timer.');
-}
-
-$('mic').addEventListener('click', () => {
-  stopVoice();
-  if (listening) stopListening(); else startListening();
 });
 
 $('heard').addEventListener('input', () => {
@@ -2538,12 +2358,10 @@ $('heard').addEventListener('input', () => {
 });
 
 $('clearHeard').addEventListener('click', () => {
-  stopListening();
-  $('heard').value = ''; finalText = '';
-  $('interim').textContent = '';
+  $('heard').value = '';
   $('step3').hidden = true;
   setStep(2);
-  setMicState('Cleared. Tap the microphone when you are ready.');
+  try { $('heard').focus(); } catch (e) {}
 });
 
 $('confirm').addEventListener('click', () => {
@@ -2552,7 +2370,6 @@ $('confirm').addEventListener('click', () => {
     try { $('heard').focus(); } catch (e) {}
     return;
   }
-  stopListening();
   const item = currentItem();
   const text = item.follow[Math.min(tFollow, item.follow.length - 1)];
   tFollow++;
@@ -2743,7 +2560,6 @@ function drawStmt() {
   $('stmtText').textContent = z.render ? z.render(item.t) : item.t;
   $('quizHeard').value = '';
   $('quizStatus').textContent = '';
-  stopQuizMic();
 
   const sc = $('scale');
   sc.innerHTML = '';
@@ -2784,52 +2600,16 @@ function nextStmt() {
 
 $('quizSkip').addEventListener('click', nextStmt);
 $('quizBack').addEventListener('click', () => { stopVoice(); if (qi > 0) { qi--; drawStmt(); } });
-$('quizQuit').addEventListener('click', () => { stopQuizMic(); quizSave(); show('about'); drawQuizCards(); });
+$('quizQuit').addEventListener('click', () => { quizSave(); show('about'); drawQuizCards(); });
 $('hearStmt').addEventListener('click', () => {
   const z = QUIZZES[quizKey];
   speak(z.render ? z.render(z.items[qi].t) : z.items[qi].t);
 });
 $('stopStmt').addEventListener('click', stopVoice);
 
-/* ---- talk-about-it mic (never scored) ---- */
-let qrec = null, qlistening = false;
-
-function stopQuizMic() {
-  qlistening = false;
-  if (qrec) { try { qrec.stop(); } catch (e) {} qrec = null; }
-  $('quizMic').setAttribute('aria-pressed', 'false');
-  $('quizMicLabel').textContent = 'Tap to talk';
-  $('quizMicState').classList.remove('live');
-  $('quizMicState').textContent = 'Microphone off.';
-}
-
-$('quizMic').addEventListener('click', () => {
-  stopVoice();
-  if (qlistening) return stopQuizMic();
-  if (!SR) { $('quizMicState').textContent = 'No microphone in this browser. Type instead.'; return; }
-  try { qrec = new SR(); } catch (e) { $('quizMicState').textContent = 'The microphone could not start.'; return; }
-  qrec.continuous = true; qrec.interimResults = true; qrec.lang = 'en-US';
-  let acc = $('quizHeard').value ? $('quizHeard').value.trim() + ' ' : '';
-  qrec.onresult = e => {
-    for (let i = e.resultIndex; i < e.results.length; i++) {
-      if (e.results[i].isFinal) acc += e.results[i][0].transcript + ' ';
-    }
-    $('quizHeard').value = acc.trim();
-  };
-  qrec.onerror = () => { $('quizMicState').textContent = 'The microphone stopped. Tap to try again.'; stopQuizMic(); };
-  qrec.onend = () => { if (qlistening) stopQuizMic(); };
-  try { qrec.start(); } catch (e) { return; }
-  qlistening = true;
-  $('quizMic').setAttribute('aria-pressed', 'true');
-  $('quizMicLabel').textContent = 'Listening — tap when done';
-  $('quizMicState').textContent = 'Listening. Nothing here is scored.';
-  $('quizMicState').classList.add('live');
-});
-
 /* ---- results ---- */
 
 function showQuizResult() {
-  stopQuizMic();
   const z = QUIZZES[quizKey];
   $('qrName').textContent = z.name;
   const box = $('qrScores');
@@ -2971,7 +2751,6 @@ function drawCard() {
   $('cardFollow').hidden = true;
   $('cardStatus').textContent = '';
   $('cardBack').disabled = ci === 0;
-  stopCardMic();
   if (ci > 0) scrollToTopOf($('cardNum').closest('.panel'));
   if (prefs.auto) speak('What might this be?');
 }
@@ -2986,10 +2765,8 @@ $('cardBigger').addEventListener('click', () => {
 });
 
 $('cardClear').addEventListener('click', () => {
-  stopCardMic();
   $('cardHeard').value = '';
   $('cardFollow').hidden = true;
-  $('cardMicState').textContent = 'Cleared. Tap the microphone when you are ready.';
 });
 
 $('cardSave').addEventListener('click', () => {
@@ -2998,7 +2775,6 @@ $('cardSave').addEventListener('click', () => {
     try { $('cardHeard').focus(); } catch (e) {}
     return;
   }
-  stopCardMic();
   cardSaid[ci] = $('cardHeard').value.trim();
   cardsSave();
   $('cardFollowText').textContent = CARD_FOLLOW[ci % CARD_FOLLOW.length];
@@ -3008,57 +2784,17 @@ $('cardSave').addEventListener('click', () => {
 });
 
 $('cardNext').addEventListener('click', () => {
-  stopVoice(); stopCardMic();
+  stopVoice();
   if (ci >= 9) return showCardsResults();
   ci++; drawCard();
 });
 
 $('cardBack').addEventListener('click', () => {
-  stopVoice(); stopCardMic();
+  stopVoice();
   if (ci > 0) { ci--; drawCard(); }
 });
 
-$('cardQuit').addEventListener('click', () => { stopCardMic(); showCardsResults(); });
-
-/* ---- microphone (never scored) ---- */
-
-function stopCardMic() {
-  cListening = false;
-  if (crec) { try { crec.stop(); } catch (e) {} crec = null; }
-  $('cardMic').setAttribute('aria-pressed', 'false');
-  $('cardMicLabel').textContent = 'Tap to talk';
-  $('cardMicState').classList.remove('live');
-  if (!$('cardMicState').textContent.includes('blocked'))
-    $('cardMicState').textContent = 'There is no wrong answer here.';
-}
-
-$('cardMic').addEventListener('click', () => {
-  stopVoice();
-  if (cListening) return stopCardMic();
-  if (!SR) { $('cardMicState').textContent = 'No microphone in this browser. Type instead.'; return; }
-  try { crec = new SR(); }
-  catch (e) { $('cardMicState').textContent = 'The microphone could not start.'; return; }
-  crec.continuous = true; crec.interimResults = true; crec.lang = 'en-US';
-  let acc = $('cardHeard').value ? $('cardHeard').value.trim() + ' ' : '';
-  crec.onresult = e => {
-    for (let i = e.resultIndex; i < e.results.length; i++)
-      if (e.results[i].isFinal) acc += e.results[i][0].transcript + ' ';
-    $('cardHeard').value = acc.trim();
-  };
-  crec.onerror = ev => {
-    $('cardMicState').textContent = (ev.error === 'not-allowed' || ev.error === 'service-not-allowed')
-      ? micBlockedText()
-      : 'The microphone stopped. Tap to try again.';
-    stopCardMic();
-  };
-  crec.onend = () => { if (cListening) stopCardMic(); };
-  try { crec.start(); } catch (e) { return; }
-  cListening = true;
-  $('cardMic').setAttribute('aria-pressed', 'true');
-  $('cardMicLabel').textContent = 'Listening — tap when done';
-  $('cardMicState').textContent = 'Listening. Take your time.';
-  $('cardMicState').classList.add('live');
-});
+$('cardQuit').addEventListener('click', () => { showCardsResults(); });
 
 /* ---- results: his words, nothing else ---- */
 
@@ -3162,7 +2898,6 @@ function drawWoods() {
   $('woodsBack').disabled = wi === 0;
   $('woodsNext').textContent = wi === WOODS.length - 1
     ? 'See what the game says  →' : 'Keep walking  →';
-  stopWoodsMic();
   if (wi > 0) scrollToTopOf($('woodsNum').closest('.panel'));
   if (prefs.auto) speak(it.q);
 }
@@ -3180,9 +2915,7 @@ $('woodsStarter').addEventListener('click', () => {
 });
 
 $('woodsClear').addEventListener('click', () => {
-  stopWoodsMic();
   $('woodsHeard').value = '';
-  $('woodsMicState').textContent = 'Cleared. Tap the microphone when you are ready.';
 });
 
 $('woodsSave').addEventListener('click', () => {
@@ -3191,65 +2924,24 @@ $('woodsSave').addEventListener('click', () => {
     try { $('woodsHeard').focus(); } catch (e) {}
     return;
   }
-  stopWoodsMic();
   woodsSaid[wi] = $('woodsHeard').value.trim();
   woodsSave();
   $('woodsStatus').textContent = 'Saved. The meanings come at the end.';
 });
 
 $('woodsNext').addEventListener('click', () => {
-  stopVoice(); stopWoodsMic();
+  stopVoice();
   if ($('woodsHeard').value.trim()) { woodsSaid[wi] = $('woodsHeard').value.trim(); woodsSave(); }
   if (wi >= WOODS.length - 1) return showWoodsResults();
   wi++; drawWoods();
 });
 
 $('woodsBack').addEventListener('click', () => {
-  stopVoice(); stopWoodsMic();
+  stopVoice();
   if (wi > 0) { wi--; drawWoods(); }
 });
 
-$('woodsQuit').addEventListener('click', () => { stopWoodsMic(); showWoodsResults(); });
-
-/* ---- microphone ---- */
-
-function stopWoodsMic() {
-  wListening = false;
-  if (wrec) { try { wrec.stop(); } catch (e) {} wrec = null; }
-  $('woodsMic').setAttribute('aria-pressed', 'false');
-  $('woodsMicLabel').textContent = 'Tap to talk';
-  $('woodsMicState').classList.remove('live');
-  if (!$('woodsMicState').textContent.includes('blocked'))
-    $('woodsMicState').textContent = 'Anything you imagine is a right answer.';
-}
-
-$('woodsMic').addEventListener('click', () => {
-  stopVoice();
-  if (wListening) return stopWoodsMic();
-  if (!SR) { $('woodsMicState').textContent = 'No microphone in this browser. Type instead.'; return; }
-  try { wrec = new SR(); }
-  catch (e) { $('woodsMicState').textContent = 'The microphone could not start.'; return; }
-  wrec.continuous = true; wrec.interimResults = true; wrec.lang = 'en-US';
-  let acc = $('woodsHeard').value ? $('woodsHeard').value.trim() + ' ' : '';
-  wrec.onresult = e => {
-    for (let i = e.resultIndex; i < e.results.length; i++)
-      if (e.results[i].isFinal) acc += e.results[i][0].transcript + ' ';
-    $('woodsHeard').value = acc.trim();
-  };
-  wrec.onerror = ev => {
-    $('woodsMicState').textContent = (ev.error === 'not-allowed' || ev.error === 'service-not-allowed')
-      ? micBlockedText()
-      : 'The microphone stopped. Tap to try again.';
-    stopWoodsMic();
-  };
-  wrec.onend = () => { if (wListening) stopWoodsMic(); };
-  try { wrec.start(); } catch (e) { return; }
-  wListening = true;
-  $('woodsMic').setAttribute('aria-pressed', 'true');
-  $('woodsMicLabel').textContent = 'Listening — tap when done';
-  $('woodsMicState').textContent = 'Listening. Take your time.';
-  $('woodsMicState').classList.add('live');
-});
+$('woodsQuit').addEventListener('click', () => { showWoodsResults(); });
 
 /* ---- results: his answer, then what the game says about it ---- */
 
@@ -3376,283 +3068,37 @@ function showDictationHelp() {
 
 $('dictClose').addEventListener('click', () => closeOverlay('dictHelp'));
 
-/* put the offer beside every words box in the app */
+/* one Speak button for every words box: puts the cursor in the box and
+   shows the one thing to do next on this device */
+function speakHint() {
+  const d = deviceDictation();
+  if (d.name === 'Windows') return 'Now press <b>Windows key + H</b> and talk. Press it again to stop.';
+  if (d.name === 'Mac') return 'Now press the <b>microphone key</b> (or Control twice) and talk.';
+  if (d.name === 'your device') return 'Now use your device&rsquo;s voice typing and talk.';
+  return 'Now tap the <b>&#127908; on your keyboard</b> and talk.';
+}
+
 document.querySelectorAll('textarea.heard').forEach(ta => {
-  const b = el('button', 'dictbtn');
+  const b = el('button', 'speakbtn');
   b.type = 'button';
-  b.innerHTML = '\u{1F3A4}&nbsp; Speak instead of typing';
-  b.addEventListener('click', showDictationHelp);
-  ta.insertAdjacentElement('afterend', b);
+  b.innerHTML = '\u{1F3A4}&nbsp; Speak';
+  const hint = el('p', 'speakhint');
+  hint.setAttribute('role', 'status');
+  hint.hidden = true;
+  const more = el('button', 'speakmore');
+  more.type = 'button';
+  more.textContent = 'Show me how';
+  more.addEventListener('click', showDictationHelp);
+  b.addEventListener('click', () => {
+    if (typeof stopVoice === 'function') stopVoice();
+    try { ta.focus({ preventScroll: true }); } catch (e) { ta.focus(); }
+    hint.innerHTML = speakHint() + ' ';
+    hint.appendChild(more);
+    hint.hidden = false;
+  });
+  ta.insertAdjacentElement('beforebegin', b);
+  ta.insertAdjacentElement('afterend', hint);
 });
-
-/* ================= MICROPHONE SETUP =================
-   Works out which of the several ways this can fail is actually happening,
-   and says so in plain words with the fix for that case.                 */
-
-const micEnv = () => ({
-  isFile: location.protocol === 'file:',
-  hasSR: !!(window.SpeechRecognition || window.webkitSpeechRecognition),
-  hasMedia: !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia),
-  secure: window.isSecureContext !== false,
-  embedded: (() => { try { return window.self !== window.top; } catch (e) { return true; } })(),
-  policy: (() => {
-    try {
-      const fp = document.featurePolicy || document.permissionsPolicy;
-      if (fp && typeof fp.allowsFeature === 'function') return fp.allowsFeature('microphone');
-    } catch (e) {}
-    return null;               // unknown — not the same as blocked
-  })()
-});
-
-function micRow(state, title, detail) {
-  const li = el('li', state);
-  const mk = el('span', 'mk', state === 'ok' ? '✓' : state === 'no' ? '✕' : '?');
-  mk.setAttribute('aria-hidden', 'true');
-  li.appendChild(mk);
-  const wrap = el('span');
-  wrap.appendChild(el('b', null, title));
-  if (detail) wrap.appendChild(el('span', null, detail));
-  li.appendChild(wrap);
-  return li;
-}
-
-function drawMicChecks(extra) {
-  const e = micEnv();
-  const box = $('micChecks');
-  box.innerHTML = '';
-
-  box.appendChild(e.hasSR
-    ? micRow('ok', 'This browser can turn speech into words', 'Speech recognition is available.')
-    : micRow('no', 'This browser cannot turn speech into words', 'Chrome or Microsoft Edge can. Safari and Firefox mostly cannot.'));
-
-  box.appendChild(e.isFile
-    ? micRow('no', 'This page was opened from a file on your computer',
-             'Chrome and Edge do not allow microphones on file pages, even though everything else works.')
-    : e.secure
-      ? micRow('ok', 'The page is on a web address that allows microphones', '')
-      : micRow('no', 'The page is not on a secure connection',
-               'Microphones are only allowed on https web addresses.'));
-
-  if (e.embedded) {
-    box.appendChild(e.policy === false
-      ? micRow('no', 'This page is inside a viewer that blocks the microphone',
-               'The viewer window does not pass microphone permission through to the page.')
-      : micRow('wait', 'This page is inside another window',
-               'That often blocks the microphone. The test below will say for certain.'));
-  } else {
-    box.appendChild(micRow('ok', 'The page is open on its own', 'Nothing is in the way.'));
-  }
-
-  if (extra) box.appendChild(extra);
-}
-
-function micFixSteps(kind) {
-  const box = $('micFix');
-  box.innerHTML = '';
-  const p = t => { const n = el('p'); n.innerHTML = t; box.appendChild(n); };
-  const steps = arr => {
-    const ol = el('ol');
-    arr.forEach(s => { const li = el('li'); li.innerHTML = s; ol.appendChild(li); });
-    box.appendChild(ol);
-  };
-
-  if (kind === 'needshttps' || kind === 'embedded') {
-    p('<strong>The microphone needs this app to be on a web address starting with https.</strong>');
-    p('Two places it will <em>not</em> work, and this is a browser rule, not a fault in the app:');
-    steps([
-      'Opened <strong>from a file</strong> on your computer &mdash; browsers refuse microphones on file pages.',
-      'Opened <strong>inside a viewer window</strong> that does not pass the microphone through.'
-    ]);
-    p('Put the app on a free web page (GitHub Pages will do it) and the microphone works normally in Chrome or Edge. Ask Claude to set that up.');
-    p('<strong>Until then, type the answers.</strong> Every activity has a typing box, and nothing in the app needs speech.');
-  } else if (kind === 'nosr') {
-    p('<strong>This browser cannot do speech recognition.</strong>');
-    steps(['Open the same page in <strong>Google Chrome</strong> or <strong>Microsoft Edge</strong>.']);
-    p('Or type the answers. Nothing in the app needs the microphone.');
-  } else if (kind === 'denied') {
-    p('<strong>The browser is blocking the microphone for this page.</strong>');
-    steps([
-      'Look at the left of the address bar for a <strong>padlock</strong> or <strong>sliders</strong> icon and click it.',
-      'Find <strong>Microphone</strong> and set it to <strong>Allow</strong>.',
-      'Reload the page and test again.'
-    ]);
-  } else if (kind === 'nodevice') {
-    p('<strong>No microphone was found.</strong>');
-    steps([
-      'On a laptop or phone there is usually one built in &mdash; check it is not switched off.',
-      'If you use a headset, plug it in and test again.'
-    ]);
-  } else if (kind === 'ok') {
-    p('<strong>The microphone is working.</strong> Go to <strong>Talk</strong> and tap the big green microphone.');
-  }
-}
-
-$('micTest').addEventListener('click', async () => {
-  const btn = $('micTest');
-  btn.setAttribute('aria-pressed', 'true');
-  $('micTestLabel').textContent = 'Testing…';
-  $('micVerdict').hidden = true;
-  $('micHeardBox').hidden = true;
-  $('micHeardText').textContent = '';
-  const e = micEnv();
-
-  const done = (state, title, detail, verdict, fix) => {
-    drawMicChecks(micRow(state, title, detail));
-    $('micVerdictText').textContent = verdict;
-    micFixSteps(fix);
-    $('micVerdict').hidden = false;
-    $('micVerdict').className = state === 'ok' ? 'note' : 'warn';
-    try {
-      const cur = JSON.parse(localStorage.getItem('steady-checkin-v1')) || {};
-      cur.micOk = (state === 'ok');
-      cur.micFix = fix;
-      localStorage.setItem('steady-checkin-v1', JSON.stringify(cur));
-    } catch (err) {}
-    applyMicWarning();
-    btn.setAttribute('aria-pressed', 'false');
-    $('micTestLabel').textContent = 'Test the microphone again';
-  };
-
-  /* 1. no transcription means the microphone is useless here, whatever the device says */
-  if (!e.hasSR)
-    return done('no', 'This browser cannot turn speech into words',
-                'A microphone would record, but nothing would appear on screen.',
-                'This browser cannot turn speech into words.', 'nosr');
-
-  /* 2. a file on disk is refused a microphone no matter what else is true */
-  if (e.isFile)
-    return done('no', 'Opened from a file on your computer',
-                'Chrome and Edge refuse microphones on file pages.',
-                'This copy is a file on your computer, and browsers do not allow microphones on those.',
-                'needshttps');
-
-  /* 3. an insecure page is never allowed a microphone */
-  if (!e.secure)
-    return done('no', 'The page is not on a secure connection',
-                'Browsers only allow microphones on https, or a file opened from your own computer.',
-                'This page is not allowed to use a microphone.', 'embedded');
-
-  /* 4. if the surrounding window has already said no, do not bother asking */
-  if (e.embedded && e.policy === false)
-    return done('no', 'The window around this page blocks the microphone',
-                'Permission is refused before the page can even ask.',
-                'The viewer this page is sitting inside will not allow a microphone.', 'embedded');
-
-  if (!e.hasMedia)
-    return done('no', 'This browser cannot reach a microphone', 'No media access available.',
-                'This browser cannot use a microphone.', 'nosr');
-
-  /* ask for the microphone itself — this is what produces the real answer */
-  let stream = null;
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-  } catch (err) {
-    const n = err && err.name;
-    if (n === 'NotAllowedError' || n === 'SecurityError') {
-      return e.embedded
-        ? done('no', 'Permission refused', 'The window around this page did not pass the microphone through.',
-               'The viewer this page is sitting inside will not allow a microphone.', 'embedded')
-        : done('no', 'Permission refused', 'The browser said no.',
-               'The browser is blocking the microphone for this page.', 'denied');
-    }
-    if (n === 'NotSupportedError')
-      return done('no', 'Microphones are not available here', String(n),
-                  'This page is not somewhere a microphone is allowed.', 'needshttps');
-    if (n === 'NotFoundError' || n === 'OverconstrainedError')
-      return done('no', 'No microphone found', 'No recording device is attached.',
-                  'There is no microphone for the app to use.', 'nodevice');
-    return done('no', 'The microphone could not start', String(n || err),
-                `Something stopped the microphone starting (${n || 'unknown'}).`,
-                e.embedded ? 'embedded' : 'denied');
-  }
-
-  /* got the device — stop it straight away, we only needed to know */
-  try { stream.getTracks().forEach(t => t.stop()); } catch (err) {}
-
-  if (!e.hasSR)
-    return done('wait', 'Microphone works, but words will not appear',
-                'The device is fine; this browser just cannot transcribe.',
-                'The microphone works, but this browser cannot turn speech into words.', 'nosr');
-
-  /* now prove the whole chain by listening for a few seconds */
-  $('micTestLabel').textContent = 'Say something…';
-  $('micHeardBox').hidden = false;
-  $('micHeardText').textContent = 'Listening…';
-  const SRC = window.SpeechRecognition || window.webkitSpeechRecognition;
-  let heard = '', settled = false;
-  const rec = new SRC();
-  rec.continuous = false; rec.interimResults = true; rec.lang = 'en-US';
-
-  const finish = () => {
-    if (settled) return; settled = true;
-    try { rec.stop(); } catch (err) {}
-    if (heard.trim()) {
-      $('micHeardText').textContent = heard.trim();
-      done('ok', 'It heard you', 'The whole chain works.',
-           'The microphone is working.', 'ok');
-    } else {
-      $('micHeardText').textContent = 'Nothing heard.';
-      done('wait', 'The microphone opened, but nothing came back',
-           'Permission is granted. It may just have been quiet.',
-           'Permission is granted, but no words came back. Try again and speak up.', 'ok');
-    }
-  };
-
-  rec.onresult = ev => {
-    heard = '';
-    for (let i = 0; i < ev.results.length; i++) heard += ev.results[i][0].transcript;
-    $('micHeardText').textContent = heard || 'Listening…';
-  };
-  rec.onerror = ev => {
-    if (settled) return; settled = true;
-    try { rec.stop(); } catch (err) {}
-    const n = ev && ev.error;
-    if (n === 'not-allowed' || n === 'service-not-allowed')
-      return done('no', 'Speech recognition was refused',
-                  e.embedded ? 'The surrounding window blocked it.' : 'The browser blocked it.',
-                  'The microphone opened but speech recognition was refused.',
-                  e.embedded ? 'embedded' : 'denied');
-    if (n === 'no-speech')
-      return done('wait', 'Nothing was said', 'The microphone is fine.',
-                  'It worked, but it did not hear anything. Try again and speak up.', 'ok');
-    if (n === 'network')
-      return done('no', 'The speech service could not be reached',
-                  'Recognition needs an internet connection.',
-                  'The microphone works, but the speech service could not be reached. Check the internet.', 'ok');
-    done('no', 'Speech recognition stopped', String(n || 'unknown'),
-         `Speech recognition stopped (${n || 'unknown'}).` +
-         (e.embedded ? ' This page is inside another window, which is the usual cause.' : ''),
-         e.embedded ? 'embedded' : 'denied');
-  };
-  rec.onend = () => finish();
-  try { rec.start(); } catch (err) { return finish(); }
-  setTimeout(finish, 7000);
-});
-
-/* show the state of things as soon as the page is set up, without asking */
-drawMicChecks();
-
-/* the in-app warning points at the panel that can explain */
-function applyMicWarning() {
-  const w = $('micWarn');
-  if (!w) return;
-  const e = micEnv();
-  let tested = null;
-  try {
-    const cur = JSON.parse(localStorage.getItem('steady-checkin-v1'));
-    if (cur && typeof cur.micOk === 'boolean') tested = cur;
-  } catch (err) {}
-
-  const knownBad = !e.hasSR || !e.secure || e.isFile || (e.embedded && e.policy === false)
-                   || (tested && tested.micOk === false);
-  if (!knownBad) { w.hidden = true; return; }
-
-  w.hidden = false;
-  w.innerHTML = 'The app&rsquo;s own microphone cannot work here. <strong>He can still speak his answer</strong> &mdash; '
-    + 'tap the box below, then use <strong>Speak instead of typing</strong> underneath it.';
-}
-applyMicWarning();
-
 
 $('micShowDict').addEventListener('click', showDictationHelp);
 
