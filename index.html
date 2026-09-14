@@ -397,6 +397,7 @@ button.armed:hover{background:#74263f}
 .speakbtn{width:100%;min-height:84px;font-size:26px;font-weight:800;margin:6px 0 4px;
   background:var(--accent);border-color:var(--accent);color:#fff}
 .speakbtn:hover{background:#432a75;border-color:#432a75}
+.speakbtn.listening{background:#8d2547;border-color:#8d2547;color:#fff}
 .speakhint{font-size:20px;font-weight:600;color:#14534a;background:#eef7f4;
   border-left:5px solid #6fae9e;border-radius:0 12px 12px 0;padding:12px 14px;margin:0 0 12px;
   overflow-wrap:break-word}
@@ -3068,20 +3069,73 @@ function showDictationHelp() {
 
 $('dictClose').addEventListener('click', () => closeOverlay('dictHelp'));
 
-/* one Speak button for every words box: puts the cursor in the box and
-   shows the one thing to do next on this device */
+/* one Speak button for every words box.
+   First choice: the browser listens itself (Chrome/Edge on https) and the words
+   land in the box as he talks. If the browser cannot or will not, the button
+   falls back to the device's own voice typing and says which key to press. */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+const canTryBrowserMic = !!SR && window.isSecureContext && location.protocol !== 'file:';
+let live = null;   // { rec, btn, ta, hint } while the browser is listening
+
 function speakHint() {
   const d = deviceDictation();
-  if (d.name === 'Windows') return 'Now press <b>Windows key + H</b> and talk. Press it again to stop.';
-  if (d.name === 'Mac') return 'Now press the <b>microphone key</b> (or Control twice) and talk.';
-  if (d.name === 'your device') return 'Now use your device&rsquo;s voice typing and talk.';
-  return 'Now tap the <b>&#127908; on your keyboard</b> and talk.';
+  if (d.name === 'Windows') return 'Press <b>Windows key + H</b> and talk. Press it again to stop.';
+  if (d.name === 'Mac') return 'Press the <b>microphone key</b> (or Control twice) and talk.';
+  if (d.name === 'your device') return 'Use your device&rsquo;s voice typing and talk.';
+  return 'Tap the <b>&#127908; on your keyboard</b> and talk.';
+}
+
+function stopBrowserMic() {
+  if (!live) return;
+  const { rec, btn } = live;
+  live = null;
+  try { rec.stop(); } catch (e) {}
+  btn.classList.remove('listening');
+  btn.innerHTML = '\u{1F3A4}&nbsp; Speak';
+}
+
+function showFallback(hint, more, lead) {
+  hint.innerHTML = (lead ? lead + ' ' : '') + speakHint() + ' ';
+  hint.appendChild(more);
+  hint.hidden = false;
+}
+
+function startBrowserMic(btn, ta, hint, more) {
+  let rec;
+  try { rec = new SR(); } catch (e) { return false; }
+  rec.continuous = true; rec.interimResults = true; rec.lang = 'en-US';
+  let base = ta.value.trim() ? ta.value.trim() + ' ' : '';
+  let heardAnything = false;
+  rec.onresult = e => {
+    let done = '', interim = '';
+    for (let i = 0; i < e.results.length; i++) {
+      const t = e.results[i][0].transcript;
+      if (e.results[i].isFinal) done += t + ' '; else interim += t;
+    }
+    heardAnything = true;
+    ta.value = (base + done + interim).replace(/\s+/g, ' ').trimEnd();
+    ta.dispatchEvent(new Event('input', { bubbles: true }));
+  };
+  rec.onerror = ev => {
+    const why = ev.error;
+    stopBrowserMic();
+    if (why === 'no-speech' || why === 'aborted') return;
+    // blocked, no device, no network: hand over to the device's own voice typing
+    showFallback(hint, more, 'The browser could not listen.');
+  };
+  rec.onend = () => { if (live && live.rec === rec) stopBrowserMic(); };
+  try { rec.start(); } catch (e) { return false; }
+  live = { rec, btn, ta, hint };
+  btn.classList.add('listening');
+  btn.innerHTML = '●&nbsp; Listening — tap when done';
+  hint.hidden = true;
+  return true;
 }
 
 document.querySelectorAll('textarea.heard').forEach(ta => {
-  const b = el('button', 'speakbtn');
-  b.type = 'button';
-  b.innerHTML = '\u{1F3A4}&nbsp; Speak';
+  const btn = el('button', 'speakbtn');
+  btn.type = 'button';
+  btn.innerHTML = '\u{1F3A4}&nbsp; Speak';
   const hint = el('p', 'speakhint');
   hint.setAttribute('role', 'status');
   hint.hidden = true;
@@ -3089,15 +3143,22 @@ document.querySelectorAll('textarea.heard').forEach(ta => {
   more.type = 'button';
   more.textContent = 'Show me how';
   more.addEventListener('click', showDictationHelp);
-  b.addEventListener('click', () => {
+  btn.addEventListener('click', () => {
     if (typeof stopVoice === 'function') stopVoice();
+    if (live && live.btn === btn) return stopBrowserMic();
+    stopBrowserMic();
     try { ta.focus({ preventScroll: true }); } catch (e) { ta.focus(); }
-    hint.innerHTML = speakHint() + ' ';
-    hint.appendChild(more);
-    hint.hidden = false;
+    if (canTryBrowserMic && startBrowserMic(btn, ta, hint, more)) return;
+    showFallback(hint, more, '');
   });
-  ta.insertAdjacentElement('beforebegin', b);
+  ta.insertAdjacentElement('beforebegin', btn);
   ta.insertAdjacentElement('afterend', hint);
+});
+
+/* leaving a page or moving on stops the listening */
+document.addEventListener('click', e => {
+  const b = e.target.closest && e.target.closest('button');
+  if (b && !b.classList.contains('speakbtn') && live) stopBrowserMic();
 });
 
 $('micShowDict').addEventListener('click', showDictationHelp);
