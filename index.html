@@ -427,7 +427,7 @@ button.armed:hover{background:#74263f}
   <div class="wrap bar">
     <div class="brand"><div class="mark" aria-hidden="true">&#10022;</div>
       <div>steady<small>A little conversation, at your pace</small></div></div>
-    <nav aria-label="Main"><button data-go="talk" aria-current="page"><span aria-hidden="true">💬</span> Talk</button><button data-go="about"><span aria-hidden="true">⭐</span> About you</button><button data-go="practice"><span aria-hidden="true">🎯</span> Practice</button><button data-go="progress"><span aria-hidden="true">📈</span> Progress</button><button data-go="setup"><span aria-hidden="true">⚙️</span> Set up</button><button data-go="sources"><span aria-hidden="true">📚</span> Sources</button></nav>
+    <nav aria-label="Main"><button data-go="talk" aria-current="page"><span aria-hidden="true">💬</span> Talk</button><button data-go="about"><span aria-hidden="true">⭐</span> About you</button><button data-go="practice"><span aria-hidden="true">🎯</span> Practice</button><button data-go="progress"><span aria-hidden="true">📈</span> Progress</button><button data-go="partner"><span aria-hidden="true">🎙️</span> AI conversation</button><button data-go="setup"><span aria-hidden="true">⚙️</span> Set up</button><button data-go="sources"><span aria-hidden="true">📚</span> Sources</button></nav>
   </div>
 </header>
 
@@ -448,6 +448,7 @@ button.armed:hover{background:#74263f}
   </div>
 
   <div class="signpost">
+    <button data-go="partner" class="sign"><span class="em" aria-hidden="true">🎙️</span><span><b>Talk with ChatGPT Voice</b><span>A back-and-forth conversation about things you enjoy</span></span><span class="go" aria-hidden="true">&rarr;</span></button>
     <button data-go="about" class="sign">
       <span class="em" aria-hidden="true">⭐</span>
       <span><b>About you</b>
@@ -943,6 +944,46 @@ button.armed:hover{background:#74263f}
 </section>
 
 <!-- ============ SETUP ============ -->
+
+<section id="partner" hidden aria-labelledby="partnerTitle">
+  <div class="hero"><div class="eyebrow">A conversation at your pace</div>
+    <h1 id="partnerTitle">Talk with ChatGPT Voice</h1>
+    <p class="lead">Talk about metal, cats, robots, and your own adventures.</p>
+  </div>
+  <div class="panel">
+    <h2>Start a conversation</h2>
+    <ol>
+      <li><strong>Copy the conversation note</strong> below.</li>
+      <li><strong>Open ChatGPT</strong>, sign in if needed, then paste and send the note in a new chat.</li>
+      <li>Tap ChatGPT&rsquo;s <strong>Voice icon</strong> beside the message box. Allow the microphone if asked.</li>
+    </ol>
+    <div class="row">
+      <button class="primary" id="copyPartner">1. Copy conversation note</button>
+      <a id="openPartner" class="btn" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:14px 20px;border:2px solid currentColor;border-radius:14px;font-weight:700">2. Open ChatGPT ↗</a>
+    </div>
+    <p id="partnerStatus" class="status" role="status">The note is ready to copy. You can change it below first.</p>
+    <details>
+      <summary>Read or change the conversation note</summary>
+      <label for="partnerPrompt">What to tell ChatGPT</label>
+<textarea id="partnerPrompt" rows="14" style="width:100%;box-sizing:border-box">Please be a friendly AI conversation partner for practicing spontaneous conversation, not a clinician. Do not diagnose or score speech or promise recovery.
+
+Speak in natural American English with a warm adult tone. Keep your turns brief, usually one or two sentences. Ask ONE interesting open-ended question at a time. Give me plenty of time. Wait until I say 'your turn' before responding where possible. If you interrupt, pause when I say 'wait.' Do not finish my sentences unless I ask. If my words are unclear, tell me what you heard and let me confirm or correct it by speaking or typing. Do not judge intelligence or personality from speech difficulty.
+
+Follow what I actually say with a relevant question. If I ask for help, offer one short sentence starter, a key word, or two choices. Accept short answers and help me expand them only if I want. Be encouraging without treating me like a child. I can say 'help,' 'new topic,' 'wait,' or 'stop.' Check whether I want a break after a few exchanges.
+
+Possible topics include music, robots, aliens, pets, fantasy adventures, cooking and funny stories. Start with: 'If a robot joined a rock band, what job would you give it?' Then wait for my answer.</textarea>
+    </details>
+  </div>
+  <div class="panel">
+    <h2>You set the pace</h2>
+    <p>Say <strong>&ldquo;wait&rdquo;</strong>, <strong>&ldquo;help&rdquo;</strong>, <strong>&ldquo;new topic&rdquo;</strong>, or <strong>&ldquo;stop&rdquo;</strong>. You can type to correct what ChatGPT heard.</p>
+    <p>Choose a voice you like in ChatGPT&rsquo;s <strong>Settings → Voice</strong>. The note asks for American English and patient turn-taking, but the AI may still interrupt during long pauses.</p>
+    <p class="muted" style="font-size:18px">This opens a separate ChatGPT conversation, not this Codex chat. The game does not send your answers, pictures or scores. Only paste information you want to share with ChatGPT. Its account settings and usage limits apply.</p>
+    <p class="muted" style="font-size:18px">AI conversation practice is not speech therapy or a clinical assessment. ChatGPT can misunderstand speech and make mistakes.</p>
+    <a href="https://help.openai.com/en/articles/20001274" target="_blank" rel="noopener noreferrer">ChatGPT Voice instructions</a>
+  </div>
+</section>
+
 <section id="setup" hidden>
   <div class="eyebrow">Make it fit</div>
   <h1>Set up</h1>
@@ -965,10 +1006,11 @@ button.armed:hover{background:#74263f}
 
   <div class="panel">
     <h2>The speaking voice</h2>
-    <p class="muted" style="font-size:18px">The voice that reads questions out loud.</p>
+    <p class="muted" style="font-size:18px">Automatically prefers a natural American English voice when your browser provides one. You can also choose a voice below.</p>
     <div class="field">
       <label for="voiceIn">Speaking voice</label>
-      <select id="voiceIn"><option value="">Device default</option></select>
+      <select id="voiceIn" aria-describedby="voiceStatus"><option value="">Automatic · American English</option></select>
+      <p id="voiceStatus" class="muted" role="status" style="font-size:18px"></p>
     </div>
     <div class="field">
       <label for="speedIn">Speaking speed</label>
@@ -987,7 +1029,7 @@ button.armed:hover{background:#74263f}
     <p class="status" id="setupStatus" role="status"></p>
     <details>
       <summary>No sound?</summary>
-      <p>Check the volume, then pick a different voice above. Voices come from the browser and the device, so the list differs on a phone and a laptop. Chrome and Edge usually have the most. The written activities all work without sound.</p>
+      <p>Check the volume, then pick a different voice above. Voices come from the browser and the device, so the list differs on a phone and a laptop. Automatic puts American English first and prefers voices marked Natural, Neural, Premium or Enhanced, then Google US English. If only basic voices are available, the app cannot make them sound like a human recording. The written activities all work without sound.</p>
     </details>
   </div>
 </section>
@@ -1285,7 +1327,7 @@ const MEANING = {
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const DEFAULTS = { name: '', voice: '', speed: 0.85, xl: false, auto: true };
+const DEFAULTS = { name: '', voice: '', voiceVersion: 1, speed: 0.85, xl: false, auto: true };
 let prefs = { ...DEFAULTS };
 let log = [];
 
@@ -1293,7 +1335,8 @@ try {
   const p = JSON.parse(localStorage.getItem('steady-checkin-v1'));
   if (p && typeof p === 'object') {
     if (typeof p.name === 'string') prefs.name = p.name.slice(0, 30);
-    if (typeof p.voice === 'string') prefs.voice = p.voice;
+    // Switch existing installations to automatic US voice once; retain later choices.
+    if (p.voiceVersion === 1 && typeof p.voice === 'string') prefs.voice = p.voice;
     if ([0.7, 0.85, 1].includes(p.speed)) prefs.speed = p.speed;
     prefs.xl = p.xl === true;
     prefs.auto = p.auto !== false;
@@ -1314,31 +1357,97 @@ let timer = null;
 
 const synth = window.speechSynthesis;
 let voices = [];
+let voiceTimer = null;
+let voiceRequest = 0;
+let pendingSpeech = null;
+let activeUtterance = null;
+const isUSVoice = v => /^en[-_]US$/i.test(v.lang || '');
+const voiceScore = v => {
+  const n = v.name || '';
+  if (/natural|neural|premium|enhanced/i.test(n)) return 100;
+  if (/Google US English/i.test(n)) return 90;
+  if (/Samantha|Ava|Allison|Susan|Tom/i.test(n)) return 60;
+  return v.localService === false ? 50 : 10;
+};
+const automaticVoice = () => voices.filter(isUSVoice)
+  .sort((a, b) => voiceScore(b) - voiceScore(a))[0] || null;
+const chosenVoice = () => voices.find(v => v.name === prefs.voice) || automaticVoice();
+const voiceStatus = text => { const box = $('voiceStatus'); if (box) box.textContent = text; };
 const loadVoices = () => {
-  if (!synth) return;
+  if (!synth) { voiceStatus('Speech is not available in this browser.'); return; }
   voices = synth.getVoices() || [];
   const sel = $('voiceIn');
   if (!sel) return;
-  sel.innerHTML = '<option value="">Device default</option>';
-  voices.forEach(v => {
-    const o = el('option', null, `${v.name}${v.lang ? ' · ' + v.lang : ''}`);
-    o.value = v.name; sel.appendChild(o);
-  });
-  sel.value = prefs.voice || '';
+  sel.innerHTML = '<option value="">Automatic · American English</option>';
+  [...voices].sort((a, b) => Number(isUSVoice(b)) - Number(isUSVoice(a)) || voiceScore(b) - voiceScore(a))
+    .forEach(v => {
+      const o = el('option', null, `${v.name}${v.lang ? ' · ' + v.lang : ''}`);
+      o.value = v.name; sel.appendChild(o);
+    });
+  sel.value = voices.some(v => v.name === prefs.voice) ? prefs.voice : '';
+  const v = chosenVoice();
+  voiceStatus(v
+    ? `Current voice: ${v.name}. ${v.localService === false ? 'This voice uses an internet connection.' : ''}`
+    : voices.length ? 'No American English voice is listed. The browser will try English (United States).'
+    : 'Waiting for your browser to load its voices…');
+  if (pendingSpeech && voices.length) {
+    const pending = pendingSpeech;
+    pendingSpeech = null;
+    clearTimeout(voiceTimer);
+    playSpeech(pending.text, pending.id);
+  }
 };
-if (synth) { loadVoices(); synth.onvoiceschanged = loadVoices; }
-
-const stopVoice = () => { if (synth) synth.cancel(); };
-
-const speak = text => {
-  if (!synth || !text) return;
-  synth.cancel();
-  const u = new SpeechSynthesisUtterance(String(text));
+const stopVoice = () => {
+  voiceRequest++;
+  pendingSpeech = null;
+  clearTimeout(voiceTimer);
+  activeUtterance = null;
+  if (synth) synth.cancel();
+};
+const playSpeech = (text, id, fallback = false) => {
+  if (id !== voiceRequest) return;
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'en-US';
   u.rate = prefs.speed;
-  const v = voices.find(x => x.name === prefs.voice);
+  u.pitch = 1;
+  const v = fallback
+    ? voices.find(x => isUSVoice(x) && x.localService)
+    : chosenVoice();
   if (v) u.voice = v;
+  activeUtterance = u;
+  u.onend = () => { if (activeUtterance === u) activeUtterance = null; };
+  u.onerror = event => {
+    if (id !== voiceRequest || /^(canceled|interrupted)$/.test(event.error)) return;
+    if (!fallback && v && v.localService === false && /^(network|synthesis-failed|voice-unavailable)$/.test(event.error)) {
+      voiceStatus('The online voice is unavailable. Trying the device’s American English voice.');
+      playSpeech(text, id, true);
+    } else {
+      activeUtterance = null;
+      voiceStatus('The voice could not play. Choose another voice and tap Test the voice.');
+    }
+  };
   synth.speak(u);
 };
+const speak = text => {
+  if (!synth || !text) return;
+  stopVoice();
+  loadVoices();
+  const id = voiceRequest;
+  if (voices.length) playSpeech(String(text), id);
+  else {
+    pendingSpeech = { text: String(text), id };
+    voiceTimer = setTimeout(() => {
+      if (!pendingSpeech || pendingSpeech.id !== id) return;
+      const pending = pendingSpeech;
+      pendingSpeech = null;
+      playSpeech(pending.text, id);
+    }, 1200);
+  }
+};
+if (synth) {
+  loadVoices();
+  synth.addEventListener('voiceschanged', loadVoices);
+}
 
 /* ---------------- shared helpers ---------------- */
 
@@ -1381,7 +1490,7 @@ function scrollToTopOf(node) {
 
 /* ---------------- navigation ---------------- */
 
-const PAGES = ['talk', 'about', 'quiz', 'quizResult', 'cards', 'cardsResults', 'woods', 'woodsResults', 'practice', 'task', 'result', 'progress', 'setup', 'sources'];
+const PAGES = ['partner', 'talk', 'about', 'quiz', 'quizResult', 'cards', 'cardsResults', 'woods', 'woodsResults', 'practice', 'task', 'result', 'progress', 'setup', 'sources'];
 
 function show(p) {
   stopVoice();
@@ -1782,6 +1891,23 @@ armConfirm($('clearBtn'), 'Tap again to delete everything', '', () => {
   save();
   drawProgress();
   $('progStatus').textContent = 'All scores cleared.';
+});
+
+
+$('copyPartner').addEventListener('click', async () => {
+  const field = $('partnerPrompt');
+  try {
+    await navigator.clipboard.writeText(field.value);
+    $('partnerStatus').textContent = 'Copied. Open ChatGPT, paste and send the note, then tap its Voice icon.';
+  } catch (e) {
+    field.closest('details').open = true;
+    field.focus(); field.select();
+    $('partnerStatus').textContent = 'The note is selected. Use Copy on your device, then open ChatGPT and paste it.';
+  }
+});
+$('openPartner').addEventListener('click', () => {
+  stopVoice();
+  if (typeof stopBrowserMic === 'function') stopBrowserMic();
 });
 
 /* ---------------- setup ---------------- */
